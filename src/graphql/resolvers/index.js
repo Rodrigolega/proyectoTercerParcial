@@ -1,40 +1,44 @@
 const db = require('../../database/db');
 
 const resolvers = {
+Query: {
 
-    Query: {
+    poets: async () =>
+        await db.select().table('Poet'),
 
-        poets: async () =>
-            await db.select().table('Poet'),
+    poems: async () =>
+        await db.select().table('Poem'),
 
-        poems: async () =>
-            await db.select().table('Poem'),
+    customers: async () =>
+        await db.select().table('Customer'),
 
-        customers: async () =>
-            await db.select().table('Customer'),
+    publications: async () =>
+        await db.select().table('Publication'),
 
-        publications: async () =>
-            await db.select().table('Publication'),
+    sales: async () =>
+        await db.select().table('Sale'),
 
-        sales: async () =>
-            await db.select().table('Sale'),
+    poemPublications: async () =>
+        await db.select().table('Poem_Publication'),
 
-        poemPublications: async () =>
-            await db.select().table('Poem_Publication'),
+    salePublications: async () =>
+        await db.select().table('Sale_Publication'),
 
-        salePublications: async () =>
-            await db.select().table('Sale_Publication'),
+    getPoetPoems: async () => {
 
-        getPoetPoems: async () => {
+        const result =
+        await db.raw('CALL getPoetPoems()');
 
-            const result =
-            await db.raw('CALL getPoetPoems()');
-
-            return result[0][0];
-
-        }
+        return result[0][0];
 
     },
+
+    poetByName: async (_, { first_name }) =>
+
+        await db('Poet')
+            .where({ first_name })
+
+},
 
     Mutation: {
 
@@ -169,6 +173,8 @@ const resolvers = {
             return poem_code;
 
         },
+
+
 
         // CUSTOMER
 

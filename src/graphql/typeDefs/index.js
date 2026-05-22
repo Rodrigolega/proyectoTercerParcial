@@ -96,6 +96,8 @@ type Query{
 
     getPoetPoems:[PoetPoemView]
 
+    poetByName(first_name:String!): [Poet]
+
 }
 
 
